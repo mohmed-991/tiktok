@@ -1,0 +1,10 @@
+
+*{
+    font-family: 'Cairo', sans-serif;
+}
+
+.show-full-trans{
+    transition-property: width;
+}
+
+@import "tailwindcss";
