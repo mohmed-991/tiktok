@@ -1,5 +1,7 @@
 
+import { useNavigate } from "react-router-dom";
     export default function Navbar() {
+        const navigate = useNavigate();
     return (
         <nav>
         <ul
@@ -26,6 +28,15 @@
 
             <li>
             <button
+            onClick={() =>
+    navigate("/auth", {
+        state: {
+        role: "customer",
+        mode: "register",
+        },
+    })
+    }
+
                 className="
                 bg-green-600
                 text-white

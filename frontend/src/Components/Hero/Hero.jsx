@@ -1,6 +1,8 @@
     import tuktuk from "../../assets/images/tuktuk-hero-CKq49YH5.png";
+    import { useNavigate } from "react-router-dom";
 
     export default function Hero() {
+            const navigate = useNavigate();
     return (
         <section
         className="
@@ -87,6 +89,14 @@
             "
             >
             <button
+                onClick={() =>
+    navigate("/auth", {
+        state: {
+        role: "customer",
+        mode: "register",
+        },
+    })
+    }
                 className="
                 bg-green-500
                 hover:bg-green-600
@@ -104,7 +114,15 @@
                 أنا عميل — اطلب توكتوك
             </button>
 
-            <button
+                <button
+                onClick={() =>
+    navigate("/auth", {
+        state: {
+        role: "driver",
+        mode: "register",
+        },
+    })
+    }
                 className="
                 bg-yellow-400
                 hover:bg-yellow-500

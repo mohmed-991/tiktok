@@ -1,15 +1,10 @@
-
-
-
-// import "./index.css";
-import LandingPage from "./pages/LandingPage/LandingPage";
+    import { useRoutes } from "react-router-dom";
+    import "./index.css";
+    import { routes } from "../src/Routes/Routes";
 
     function App() {
-    return (
-        <>
-        <LandingPage />
-        </>
-    );
+    const elements = useRoutes(routes);
+    return elements;
     }
 
-export default App;
+    export default App;
