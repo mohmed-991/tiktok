@@ -2,18 +2,17 @@
     import { useLocation, useNavigate } from "react-router-dom";
 
     export default function Auth() {
+    const location = useLocation();
+    const navigate = useNavigate();
 
-        const location = useLocation();
-        const navigate = useNavigate();
-
-        
     const [mode, setMode] = useState(
-    location.state?.mode || "register"
-);
+        location.state?.mode || "register"
+    );
 
-const [role, setRole] = useState(
-    location.state?.role || "customer"
-);
+    const [role, setRole] = useState(
+        location.state?.role || "customer"
+    );
+
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
@@ -27,6 +26,15 @@ const [role, setRole] = useState(
         });
     };
 
+    // الانتقال للداشبورد حسب نوع الحساب
+    const goToDashboard = () => {
+        if (role === "customer") {
+        navigate("/customer");
+        } else {
+        navigate("/driver");
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -36,11 +44,15 @@ const [role, setRole] = useState(
         ...formData,
         });
 
-        alert(
-        mode === "register"
-            ? "تم إنشاء الحساب بنجاح"
-            : "تم تسجيل الدخول"
-        );
+        // هنا بعدين هنربطها بالـ API
+        if (mode === "register") {
+        alert("تم إنشاء الحساب بنجاح");
+        } else {
+        alert("تم تسجيل الدخول بنجاح");
+        }
+
+        // الانتقال للداشبورد
+        goToDashboard();
     };
 
     return (
@@ -61,6 +73,7 @@ const [role, setRole] = useState(
             {/* Tabs */}
             <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
             <button
+                type="button"
                 onClick={() => setMode("login")}
                 className={`cursor-pointer w-1/2 py-3 rounded-lg font-medium transition-all ${
                 mode === "login"
@@ -72,6 +85,7 @@ const [role, setRole] = useState(
             </button>
 
             <button
+                type="button"
                 onClick={() => setMode("register")}
                 className={`cursor-pointer w-1/2 py-3 rounded-lg font-medium transition-all ${
                 mode === "register"
@@ -117,10 +131,8 @@ const [role, setRole] = useState(
             </div>
 
             {/* Form */}
-            <form
-            onSubmit={handleSubmit}
-            className="space-y-4"
-            >
+            <form onSubmit={handleSubmit} className="space-y-4">
+
             {mode === "register" && (
                 <div>
                 <label className="block mb-2 font-medium">
@@ -134,6 +146,7 @@ const [role, setRole] = useState(
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full border rounded-xl p-3 outline-none focus:border-green-600"
+                    required
                 />
                 </div>
             )}
@@ -150,6 +163,7 @@ const [role, setRole] = useState(
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full border rounded-xl p-3 outline-none focus:border-green-600"
+                required
                 />
             </div>
 
@@ -165,6 +179,7 @@ const [role, setRole] = useState(
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full border rounded-xl p-3 outline-none focus:border-green-600"
+                required
                 />
             </div>
 
@@ -176,16 +191,18 @@ const [role, setRole] = useState(
                 ? "إنشاء الحساب"
                 : "تسجيل الدخول"}
             </button>
+
             </form>
 
             <div className="text-center mt-6">
             <button
-    onClick={() => navigate("/")}
-    className="text-gray-500 hover:text-green-600 cursor-pointer"
->
+                onClick={() => navigate("/")}
+                className="text-gray-500 hover:text-green-600 cursor-pointer"
+            >
                 رجوع للصفحة الرئيسية
             </button>
             </div>
+
         </div>
         </div>
     );
